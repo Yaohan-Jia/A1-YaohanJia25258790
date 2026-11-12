@@ -1,24 +1,16 @@
 /**
- * A patient attending the health service, identified by name and mobile phone
- * number.
- *
- * <p>The details are kept private and are validated in the constructor, so a
- * patient object can never be created without the basic contact information
- * the appointment system needs.</p>
+ * A patient, with name and mobile number for contact.
  */
 public class Patient {
 
-    /** The patient's full name. */
     private String name;
-
-    /** The patient's mobile phone number used for contact. */
     private String mobile;
 
     /**
-     * Constructs a patient.
+     * Creates a patient and checks the contact details.
      *
-     * @param name   the patient's full name
-     * @param mobile the patient's mobile phone number
+     * @param name   patient's full name
+     * @param mobile patient's mobile number
      * @throws IllegalArgumentException if either value is blank
      */
     public Patient(String name, String mobile) {
@@ -32,29 +24,14 @@ public class Patient {
         this.mobile = mobile.trim();
     }
 
-    /**
-     * Returns the patient's name.
-     *
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Returns the patient's mobile number.
-     *
-     * @return the mobile number
-     */
     public String getMobile() {
         return mobile;
     }
 
-    /**
-     * Returns a readable summary of the patient.
-     *
-     * @return a string containing name and mobile number
-     */
     @Override
     public String toString() {
         return "Patient: " + name + " (mobile: " + mobile + ")";

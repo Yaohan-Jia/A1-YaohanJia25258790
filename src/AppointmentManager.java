@@ -3,41 +3,25 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Manages the collection of appointments for the current day.
- *
- * <p>The manager supports adding appointments (with a double-booking check),
- * filtering by professional ID or patient phone number, sorting by time, and
- * cancelling appointments either by professional ID and slot or by patient
- * phone number. Every operation returns a clear success or warning message.</p>
- *
- * <p>The fixed daily schedule is held as a constant array: 08:00 to 16:00 in
- * 30-minute intervals. Changing this constant later only affects the schedule
- * itself; the rest of the booking logic works with it unchanged.</p>
+ * Keeps the day's appointments and handles adding, filtering, sorting and
+ * cancelling them. Each operation returns a success or warning message.
  */
 public class AppointmentManager {
 
-    /** Fixed daily schedule: 08:00-16:00 in 30-minute intervals. */
+    // Clinic schedule: 08:00 to 16:00, one slot every 30 minutes.
     private static final String[] TIME_SLOTS = {
             "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
             "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
             "14:00", "14:30", "15:00", "15:30", "16:00"
     };
 
-    /** All appointments currently booked for the day. */
     private List<Appointment> appointments;
 
-    /**
-     * Constructs an empty appointment manager.
-     */
     public AppointmentManager() {
         appointments = new ArrayList<Appointment>();
     }
 
-    /**
-     * Returns a copy of the fixed daily schedule.
-     *
-     * @return an independent copy of the time-slot array
-     */
+    /** Returns a copy of the fixed daily schedule. */
     public static String[] getTimeSlots() {
         String[] copy = new String[TIME_SLOTS.length];
         for (int i = 0; i < TIME_SLOTS.length; i++) {
@@ -46,12 +30,7 @@ public class AppointmentManager {
         return copy;
     }
 
-    /**
-     * Finds the schedule index of a time label, for validation and ordering.
-     *
-     * @param timeSlot the time label to look up
-     * @return the slot index, or -1 if the label is not in the schedule
-     */
+    /** Finds the index of a time label in the schedule, or -1 if it isn't there. */
     private int indexOfSlot(String timeSlot) {
         for (int i = 0; i < TIME_SLOTS.length; i++) {
             if (TIME_SLOTS[i].equals(timeSlot)) {
@@ -62,15 +41,10 @@ public class AppointmentManager {
     }
 
     /**
-     * Adds an appointment.
+     * Adds an appointment. Rejects it if details are missing, the slot is not
+     * in the schedule, or the same professional is already booked then.
      *
-     * <p>The booking is rejected if any required detail is missing, if the
-     * time slot is not part of the daily schedule, or if the same professional
-     * is already booked into that slot. Professionals are matched by their ID
-     * through {@link HealthProfessional#equals(Object)}.</p>
-     *
-     * @param appointment the appointment to add
-     * @return a success message, or a warning explaining why it was rejected
+     * @return a success message, or a warning saying why it was rejected
      */
     public String addAppointment(Appointment appointment) {
         if (appointment == null) {
@@ -85,6 +59,7 @@ public class AppointmentManager {
                     + " is not a valid time slot in the daily schedule.";
         }
 
+        // Reject double-booking: same professional and same slot already exists.
         for (Appointment existing : appointments) {
             if (existing.getProfessional().equals(appointment.getProfessional())
                     && existing.getTimeSlot().equals(appointment.getTimeSlot())) {
@@ -100,12 +75,7 @@ public class AppointmentManager {
                 + " at " + appointment.getTimeSlot() + ".";
     }
 
-    /**
-     * Returns the appointments for the professional with the given ID.
-     *
-     * @param professionalId the ID to match
-     * @return a list of matching appointments (empty if none match)
-     */
+    /** Returns appointments for the professional with the given ID. */
     public List<Appointment> filterByProfessionalId(String professionalId) {
         List<Appointment> result = new ArrayList<Appointment>();
         if (professionalId == null) {
@@ -119,12 +89,7 @@ public class AppointmentManager {
         return result;
     }
 
-    /**
-     * Returns the appointments for the patient with the given mobile number.
-     *
-     * @param mobile the phone number to match
-     * @return a list of matching appointments (empty if none match)
-     */
+    /** Returns appointments for the patient with the given mobile number. */
     public List<Appointment> filterByPatientPhone(String mobile) {
         List<Appointment> result = new ArrayList<Appointment>();
         if (mobile == null) {
@@ -138,22 +103,11 @@ public class AppointmentManager {
         return result;
     }
 
-    /**
-     * Returns all appointments in their current order.
-     *
-     * @return a list of all appointments
-     */
     public List<Appointment> getAllAppointments() {
         return new ArrayList<Appointment>(appointments);
     }
 
-    /**
-     * Returns all appointments sorted from earliest to latest by time.
-     *
-     * <p>The internal collection is left unchanged; a sorted copy is returned.</p>
-     *
-     * @return a time-ordered list of all appointments
-     */
+    /** Returns a copy of all appointments sorted earliest to latest. */
     public List<Appointment> getSortedByTime() {
         List<Appointment> sorted = new ArrayList<Appointment>(appointments);
         Collections.sort(sorted);
@@ -161,11 +115,9 @@ public class AppointmentManager {
     }
 
     /**
-     * Cancels the appointment for the given professional at the given slot.
+     * Cancels the appointment for the given professional and slot.
      *
-     * @param professionalId the professional's ID
-     * @param timeSlot       the time slot to cancel
-     * @return a success message, or a warning if no matching appointment exists
+     * @return a success message, or a warning if nothing matched
      */
     public String cancelByProfessionalAndSlot(String professionalId, String timeSlot) {
         for (Appointment appointment : appointments) {
@@ -183,10 +135,11 @@ public class AppointmentManager {
     /**
      * Cancels all appointments for the patient with the given mobile number.
      *
-     * @param mobile the patient's phone number
-     * @return a success message, or a warning if no matching appointment exists
+     * @return a success message, or a warning if nothing matched
      */
     public String cancelByPatientPhone(String mobile) {
+        // Collect matches first, then remove them, to avoid changing the list
+        // while looping over it.
         List<Appointment> toRemove = new ArrayList<Appointment>();
         for (Appointment appointment : appointments) {
             if (appointment.getPatient().getMobile().equals(mobile)) {

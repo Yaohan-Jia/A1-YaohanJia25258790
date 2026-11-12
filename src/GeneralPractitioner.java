@@ -1,24 +1,17 @@
 import java.util.List;
 
 /**
- * A general practitioner (GP), the family doctor who sees patients for common
- * health concerns and may issue prescriptions.
- *
- * <p>Inherits all common details from {@link HealthProfessional} and adds the
- * GP's clinic room number.</p>
+ * A general practitioner (GP), the family doctor who sees common health
+ * problems and can write prescriptions.
  */
 public class GeneralPractitioner extends HealthProfessional {
 
-    /** The clinic room where this GP consults, e.g. "Room 3". */
     private String clinicRoom;
 
     /**
-     * Constructs a general practitioner.
+     * Creates a GP.
      *
-     * @param id          the GP's digit-only ID
-     * @param name        the GP's full name
-     * @param workingDays the weekdays on which the GP works
-     * @param clinicRoom  the clinic room number
+     * @param clinicRoom room the GP consults in
      */
     public GeneralPractitioner(String id, String name, List<String> workingDays, String clinicRoom) {
         super(id, name, workingDays);
@@ -26,11 +19,6 @@ public class GeneralPractitioner extends HealthProfessional {
                 ? "Unassigned" : clinicRoom.trim();
     }
 
-    /**
-     * Returns the clinic room.
-     *
-     * @return the clinic room number
-     */
     public String getClinicRoom() {
         return clinicRoom;
     }

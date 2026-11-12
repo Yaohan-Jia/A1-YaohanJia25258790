@@ -1,24 +1,17 @@
 import java.util.List;
 
 /**
- * A specialist doctor who practises a particular medical field, such as a
- * paediatrician, radiologist or cardiologist.
- *
- * <p>Inherits all common details from {@link HealthProfessional} and adds the
- * specific field of specialisation.</p>
+ * A specialist doctor working in one medical field, such as a cardiologist
+ * or paediatrician.
  */
 public class Specialist extends HealthProfessional {
 
-    /** The specific medical field, e.g. "Paediatrician", "Cardiologist". */
     private String specialtyField;
 
     /**
-     * Constructs a specialist.
+     * Creates a specialist.
      *
-     * @param id            the specialist's digit-only ID
-     * @param name          the specialist's full name
-     * @param workingDays   the weekdays on which the specialist works
-     * @param specialtyField the medical field of specialisation
+     * @param specialtyField the medical field, e.g. Cardiologist
      */
     public Specialist(String id, String name, List<String> workingDays, String specialtyField) {
         super(id, name, workingDays);
@@ -26,11 +19,6 @@ public class Specialist extends HealthProfessional {
                 ? "General specialist" : specialtyField.trim();
     }
 
-    /**
-     * Returns the specialisation field.
-     *
-     * @return the medical field
-     */
     public String getSpecialtyField() {
         return specialtyField;
     }
@@ -42,7 +30,7 @@ public class Specialist extends HealthProfessional {
 
     @Override
     public String describeRole() {
-        return "Provides expert diagnosis and treatment within the " + specialtyField + " field.";
+        return "Handles diagnosis and treatment in the " + specialtyField + " field.";
     }
 
     @Override
