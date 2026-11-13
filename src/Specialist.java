@@ -30,7 +30,7 @@ public class Specialist extends HealthProfessional {
 
     @Override
     public String describeRole() {
-        return "Handles diagnosis and treatment in the " + specialtyField + " field.";
+        return "Provides specialist diagnosis and treatment as a " + specialtyField + ".";
     }
 
     @Override

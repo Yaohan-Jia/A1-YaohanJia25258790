@@ -54,9 +54,16 @@ public class AppointmentManager {
                 || appointment.getTimeSlot() == null || appointment.getTimeSlot().trim().isEmpty()) {
             return "WARNING: Appointment could not be added because required details are missing.";
         }
-        if (indexOfSlot(appointment.getTimeSlot()) == -1) {
+        int realIndex = indexOfSlot(appointment.getTimeSlot());
+        if (realIndex == -1) {
             return "WARNING: Appointment could not be added because " + appointment.getTimeSlot()
                     + " is not a valid time slot in the daily schedule.";
+        }
+        // The stored index must match the slot's position in the schedule,
+        // otherwise time ordering would be wrong.
+        if (appointment.getSlotIndex() != realIndex) {
+            return "WARNING: Appointment could not be added because the slot index does not match "
+                    + appointment.getTimeSlot() + " in the daily schedule.";
         }
 
         // Reject double-booking: same professional and same slot already exists.
@@ -81,8 +88,9 @@ public class AppointmentManager {
         if (professionalId == null) {
             return result;
         }
+        String targetId = professionalId.trim();
         for (Appointment appointment : appointments) {
-            if (appointment.getProfessional().getId().equals(professionalId)) {
+            if (appointment.getProfessional().getId().equals(targetId)) {
                 result.add(appointment);
             }
         }
@@ -95,8 +103,9 @@ public class AppointmentManager {
         if (mobile == null) {
             return result;
         }
+        String targetMobile = mobile.trim();
         for (Appointment appointment : appointments) {
-            if (appointment.getPatient().getMobile().equals(mobile)) {
+            if (appointment.getPatient().getMobile().equals(targetMobile)) {
                 result.add(appointment);
             }
         }
@@ -120,16 +129,18 @@ public class AppointmentManager {
      * @return a success message, or a warning if nothing matched
      */
     public String cancelByProfessionalAndSlot(String professionalId, String timeSlot) {
+        String targetId = professionalId == null ? null : professionalId.trim();
+        String targetSlot = timeSlot == null ? null : timeSlot.trim();
         for (Appointment appointment : appointments) {
-            if (appointment.getProfessional().getId().equals(professionalId)
-                    && appointment.getTimeSlot().equals(timeSlot)) {
+            if (appointment.getProfessional().getId().equals(targetId)
+                    && appointment.getTimeSlot().equals(targetSlot)) {
                 appointments.remove(appointment);
                 return "SUCCESS: Appointment cancelled for " + appointment.getProfessional().getName()
-                        + " at " + timeSlot + ".";
+                        + " at " + targetSlot + ".";
             }
         }
-        return "WARNING: No appointment found for professional ID " + professionalId
-                + " at " + timeSlot + "; nothing was cancelled.";
+        return "WARNING: No appointment found for professional ID " + targetId
+                + " at " + targetSlot + "; nothing was cancelled.";
     }
 
     /**
@@ -140,20 +151,21 @@ public class AppointmentManager {
     public String cancelByPatientPhone(String mobile) {
         // Collect matches first, then remove them, to avoid changing the list
         // while looping over it.
+        String targetMobile = mobile == null ? null : mobile.trim();
         List<Appointment> toRemove = new ArrayList<Appointment>();
         for (Appointment appointment : appointments) {
-            if (appointment.getPatient().getMobile().equals(mobile)) {
+            if (appointment.getPatient().getMobile().equals(targetMobile)) {
                 toRemove.add(appointment);
             }
         }
 
         if (toRemove.isEmpty()) {
-            return "WARNING: No appointment found for patient phone " + mobile
+            return "WARNING: No appointment found for patient phone " + targetMobile
                     + "; nothing was cancelled.";
         }
 
         appointments.removeAll(toRemove);
         return "SUCCESS: " + toRemove.size() + " appointment(s) cancelled for patient phone "
-                + mobile + ".";
+                + targetMobile + ".";
     }
 }
