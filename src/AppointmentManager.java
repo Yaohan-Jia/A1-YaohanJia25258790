@@ -17,6 +17,7 @@ public class AppointmentManager {
 
     private List<Appointment> appointments;
 
+    /** Creates an empty appointment manager. */
     public AppointmentManager() {
         appointments = new ArrayList<Appointment>();
     }
@@ -112,6 +113,7 @@ public class AppointmentManager {
         return result;
     }
 
+    /** Returns a copy of all appointments in the order they were added. */
     public List<Appointment> getAllAppointments() {
         return new ArrayList<Appointment>(appointments);
     }

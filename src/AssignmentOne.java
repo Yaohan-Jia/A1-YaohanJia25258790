@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class AssignmentOne {
 
+    /** Runs the scripted demonstration: the professionals first, then the appointment system. */
     public static void main(String[] args) {
         demonstrateProfessionals();
         demonstrateAppointments();

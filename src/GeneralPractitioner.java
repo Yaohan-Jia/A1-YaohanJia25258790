@@ -11,7 +11,10 @@ public class GeneralPractitioner extends HealthProfessional {
     /**
      * Creates a GP.
      *
-     * @param clinicRoom room the GP consults in
+     * @param id          digits-only professional ID
+     * @param name        professional's full name
+     * @param workingDays weekdays the GP works
+     * @param clinicRoom  room the GP consults in
      */
     public GeneralPractitioner(String id, String name, List<String> workingDays, String clinicRoom) {
         super(id, name, workingDays);

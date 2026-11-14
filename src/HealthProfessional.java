@@ -83,6 +83,7 @@ public abstract class HealthProfessional {
         return this.id.equals(other.id);
     }
 
+    /** Hash code follows equals: professionals with the same ID share the same hash code. */
     @Override
     public int hashCode() {
         return id.hashCode();

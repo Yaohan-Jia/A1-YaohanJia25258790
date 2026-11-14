@@ -11,6 +11,9 @@ public class Specialist extends HealthProfessional {
     /**
      * Creates a specialist.
      *
+     * @param id             digits-only professional ID
+     * @param name           professional's full name
+     * @param workingDays    weekdays the specialist works
      * @param specialtyField the medical field, e.g. Cardiologist
      */
     public Specialist(String id, String name, List<String> workingDays, String specialtyField) {

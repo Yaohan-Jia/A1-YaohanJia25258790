@@ -10,6 +10,9 @@ public class Dietitian extends HealthProfessional {
     /**
      * Creates a dietitian.
      *
+     * @param id           digits-only professional ID
+     * @param name         professional's full name
+     * @param workingDays  weekdays the dietitian works
      * @param qualification professional qualification level
      */
     public Dietitian(String id, String name, List<String> workingDays, String qualification) {

@@ -11,7 +11,10 @@ public class Nurse extends HealthProfessional {
     /**
      * Creates a nurse.
      *
-     * @param ward ward the nurse works on
+     * @param id          digits-only professional ID
+     * @param name        professional's full name
+     * @param workingDays weekdays the nurse works
+     * @param ward        ward the nurse works on
      */
     public Nurse(String id, String name, List<String> workingDays, String ward) {
         super(id, name, workingDays);
