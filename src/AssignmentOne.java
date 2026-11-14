@@ -102,6 +102,12 @@ public class AssignmentOne {
                 new Appointment(new Patient("Tom Blue", "0412 300 005"), gp1, "09:00", 2)));
         System.out.println();
 
+        // Error case: request a slot outside the fixed daily schedule.
+        System.out.println("--- Error case: book Dr Alice Bennett at 17:00 (outside schedule) ---");
+        System.out.println(manager.addAppointment(
+                new Appointment(new Patient("Tom Blue", "0412 300 005"), gp1, "17:00", 17)));
+        System.out.println();
+
         // Cancel by professional ID and slot.
         System.out.println("--- Cancelling: professional ID 301 at 08:30 ---");
         System.out.println(manager.cancelByProfessionalAndSlot("301", "08:30"));
