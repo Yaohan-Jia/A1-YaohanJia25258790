@@ -21,20 +21,24 @@ public class Dietitian extends HealthProfessional {
                 ? "Registered" : qualification.trim();
     }
 
+    /** Returns the dietitian's professional qualification. */
     public String getQualification() {
         return qualification;
     }
 
+    /** Returns the specialty label for this professional type. */
     @Override
     public String getSpecialty() {
         return "Dietitian";
     }
 
+    /** Describes what this role does. */
     @Override
     public String describeRole() {
         return "Reviews patients' diets and gives nutrition advice.";
     }
 
+    /** Combines the shared details with this type's own field. */
     @Override
     public String toString() {
         return super.toString() + ", Specialty: " + getSpecialty()

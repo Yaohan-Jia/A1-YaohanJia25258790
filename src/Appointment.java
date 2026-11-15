@@ -35,18 +35,22 @@ public class Appointment implements Comparable<Appointment> {
         this.slotIndex = slotIndex;
     }
 
+    /** Returns the patient attending. */
     public Patient getPatient() {
         return patient;
     }
 
+    /** Returns the booked professional. */
     public HealthProfessional getProfessional() {
         return professional;
     }
 
+    /** Returns the time slot label, e.g. "09:30". */
     public String getTimeSlot() {
         return timeSlot;
     }
 
+    /** Returns the slot's position in the daily schedule. */
     public int getSlotIndex() {
         return slotIndex;
     }
@@ -59,6 +63,7 @@ public class Appointment implements Comparable<Appointment> {
         return Integer.compare(this.slotIndex, other.slotIndex);
     }
 
+    /** Builds the readable details shown when the appointment is printed. */
     @Override
     public String toString() {
         return timeSlot + " | " + patient + " | " + professional;

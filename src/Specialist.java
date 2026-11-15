@@ -22,20 +22,24 @@ public class Specialist extends HealthProfessional {
                 ? "General specialist" : specialtyField.trim();
     }
 
+    /** Returns the medical field the specialist works in. */
     public String getSpecialtyField() {
         return specialtyField;
     }
 
+    /** Returns the specialty label for this professional type. */
     @Override
     public String getSpecialty() {
         return "Specialist (" + specialtyField + ")";
     }
 
+    /** Describes what this role does. */
     @Override
     public String describeRole() {
         return "Provides specialist diagnosis and treatment as a " + specialtyField + ".";
     }
 
+    /** Combines the shared details with this type's own field. */
     @Override
     public String toString() {
         return super.toString() + ", Specialty: " + getSpecialty();

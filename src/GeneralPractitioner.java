@@ -22,20 +22,24 @@ public class GeneralPractitioner extends HealthProfessional {
                 ? "Unassigned" : clinicRoom.trim();
     }
 
+    /** Returns the room the GP consults in. */
     public String getClinicRoom() {
         return clinicRoom;
     }
 
+    /** Returns the specialty label for this professional type. */
     @Override
     public String getSpecialty() {
         return "General Practitioner";
     }
 
+    /** Describes what this role does. */
     @Override
     public String describeRole() {
         return "Sees patients for everyday health concerns and may prescribe medication.";
     }
 
+    /** Combines the shared details with this type's own field. */
     @Override
     public String toString() {
         return super.toString() + ", Specialty: " + getSpecialty()

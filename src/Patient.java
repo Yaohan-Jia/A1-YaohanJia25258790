@@ -24,14 +24,17 @@ public class Patient {
         this.mobile = mobile.trim();
     }
 
+    /** Returns the patient's name. */
     public String getName() {
         return name;
     }
 
+    /** Returns the patient's mobile number. */
     public String getMobile() {
         return mobile;
     }
 
+    /** Builds the readable details shown when the patient is printed. */
     @Override
     public String toString() {
         return "Patient: " + name + " (mobile: " + mobile + ")";

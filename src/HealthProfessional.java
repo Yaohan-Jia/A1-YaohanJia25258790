@@ -46,10 +46,12 @@ public abstract class HealthProfessional {
         }
     }
 
+    /** Returns the professional's ID. */
     public String getId() {
         return id;
     }
 
+    /** Returns the professional's full name. */
     public String getName() {
         return name;
     }
@@ -89,6 +91,7 @@ public abstract class HealthProfessional {
         return id.hashCode();
     }
 
+    /** Builds the readable details shown when the professional is printed. */
     @Override
     public String toString() {
         return "ID: " + id + ", Name: " + name + ", Working days: " + workingDays;

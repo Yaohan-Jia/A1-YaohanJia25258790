@@ -22,20 +22,24 @@ public class Nurse extends HealthProfessional {
                 ? "Unassigned" : ward.trim();
     }
 
+    /** Returns the ward the nurse works on. */
     public String getWard() {
         return ward;
     }
 
+    /** Returns the specialty label for this professional type. */
     @Override
     public String getSpecialty() {
         return "Nurse";
     }
 
+    /** Describes what this role does. */
     @Override
     public String describeRole() {
         return "Provides nursing care and may take blood samples for patients.";
     }
 
+    /** Combines the shared details with this type's own field. */
     @Override
     public String toString() {
         return super.toString() + ", Specialty: " + getSpecialty()
